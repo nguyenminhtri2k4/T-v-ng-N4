@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minna N4 – Full 25 Bài (26–50)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Be+Vietnam+Pro:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #0a0c10;
+  --card: #111318;
+  --border: #1e2330;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --red: #f87171;
+  --text: #e2e8f0;
+  --dim: #64748b;
+  --gold: #fbbf24;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.screen { display: none; width: 100%; max-width: 480px; padding: 20px 16px; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ── MENU ── */
+.logo { text-align: center; padding: 30px 0 24px; }
+.logo-ja { font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: var(--dim); letter-spacing: 4px; }
+.logo-en { font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1.1; margin: 4px 0; }
+.logo-sub { font-size: 12px; color: var(--dim); }
+
+.total-badge {
+  background: rgba(56,189,248,.1);
+  border: 1px solid rgba(56,189,248,.25);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--accent);
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.section-label { font-size: 11px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; margin: 18px 0 8px; }
+
+.group-grid { display: flex; flex-direction: column; gap: 8px; }
+
+.group-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .2s, transform .15s;
+  display: flex; align-items: center; gap: 14px;
+}
+.group-card:hover { border-color: var(--accent2); transform: translateX(4px); }
+.group-num {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--accent2);
+  min-width: 48px; text-align: center;
+}
+.group-info b { display: block; font-size: 14px; font-weight: 700; }
+.group-info span { font-size: 11px; color: var(--dim); line-height: 1.4; }
+.group-count { margin-left: auto; font-size: 11px; color: var(--dim); white-space: nowrap; }
+
+/* ── MODE SELECT ── */
+.mode-header { padding: 20px 0 30px; text-align: center; }
+.mode-header h2 { font-size: 20px; font-weight: 700; color: var(--accent2); }
+.mode-header p { font-size: 12px; color: var(--dim); margin-top: 4px; }
+
+.mode-cards { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.mode-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  transition: .2s;
+  flex: 1;
+}
+.mode-card:hover { border-color: var(--accent); background: rgba(56,189,248,.05); }
+.mode-icon { font-size: 32px; margin-bottom: 8px; }
+.mode-card b { display: block; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.mode-card p { font-size: 12px; color: var(--dim); line-height: 1.5; }
+
+.btn-back {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: .2s;
+  margin-top: 14px;
+}
+.btn-back:hover { color: var(--text); border-color: var(--dim); }
+
+/* ── QUIZ ── */
+.quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
+.q-badge { font-size: 11px; color: var(--dim); background: var(--card); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; }
+.q-score { font-size: 13px; color: var(--accent); font-weight: 700; }
+
+.progress-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 22px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); width: 0%; transition: width .4s ease; border-radius: 2px; }
+
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+.q-main { font-family: 'Noto Sans JP', sans-serif; font-size: 52px; font-weight: 600; line-height: 1.1; }
+.q-hint { font-size: 12px; color: var(--dim); }
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 16px 18px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color .15s, background .15s;
+  line-height: 1.4;
+}
+.opt:hover:not(:disabled) { border-color: var(--accent2); background: rgba(129,140,248,.06); }
+.opt.correct { border-color: var(--accent) !important; background: rgba(56,189,248,.12) !important; color: var(--accent); font-weight: 700; }
+.opt.wrong { border-color: var(--red) !important; background: rgba(248,113,113,.1) !important; color: var(--red); }
+.opt:disabled { cursor: default; }
+
+/* ── RESULT ── */
+.result-screen { justify-content: center; align-items: center; text-align: center; gap: 16px; }
+.result-emoji { font-size: 72px; line-height: 1; }
+.result-title { font-size: 26px; font-weight: 700; }
+.result-score { font-size: 52px; font-weight: 900; color: var(--accent); font-family: 'Noto Sans JP', sans-serif; }
+.result-label { font-size: 14px; color: var(--dim); }
+.result-pct { font-size: 18px; color: var(--accent2); font-weight: 600; }
+
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: .2s;
+  width: 100%;
+  margin-top: 8px;
+}
+.btn-primary:hover { background: #7dd3fc; }
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: .2s;
+  width: 100%;
+}
+.btn-secondary:hover { border-color: var(--dim); }
+</style>
+</head>
+<body>
+
+<!-- ── MENU ── -->
+<div class="screen active" id="s-menu">
+  <div class="logo">
+    <div class="logo-ja">みんなの日本語 中級前</div>
+    <div class="logo-en">MINNA N4</div>
+    <div class="logo-sub">Từ vựng đầy đủ 25 bài (Bài 26 – 50)</div>
+    <div class="total-badge" id="total-badge">Đang tải...</div>
+  </div>
+
+  <div class="section-label">Chọn nhóm bài học</div>
+  <div class="group-grid" id="group-grid"></div>
+</div>
+
+<!-- ── MODE SELECT ── -->
+<div class="screen" id="s-mode">
+  <div class="mode-header">
+    <h2 id="mode-title"></h2>
+    <p id="mode-sub"></p>
+  </div>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="startQuiz('kana')">
+      <div class="mode-icon">🈳</div>
+      <b>KANA MODE</b>
+      <p>Hiragana / Katakana → Nghĩa tiếng Việt. Luyện đọc và phản xạ nghĩa.</p>
+    </div>
+    <div class="mode-card" onclick="startQuiz('kanji')">
+      <div class="mode-icon">漢</div>
+      <b>KANJI MODE</b>
+      <p>Chữ Hán → Cách đọc + Nghĩa. Nắm vững mặt chữ Kanji N4.</p>
+    </div>
+    <div class="mode-card" onclick="startQuiz('meaning')">
+      <div class="mode-icon">🇻🇳</div>
+      <b>NGHĨA → KANA</b>
+      <p>Tiếng Việt → chọn từ tiếng Nhật. Luyện nhớ từ vựng chiều ngược.</p>
+    </div>
+  </div>
+  <button class="btn-back" onclick="goTo('s-menu')">← Quay lại</button>
+</div>
+
+<!-- ── QUIZ ── -->
+<div class="screen" id="s-quiz">
+  <div class="quiz-header">
+    <button class="btn-back" style="margin-top:0; padding:6px 12px;" onclick="goTo('s-mode')">←</button>
+    <div class="q-badge" id="q-count">0 / 0</div>
+    <div class="q-score" id="q-score">✓ 0</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="q-fill"></div></div>
+  <div class="q-card">
+    <div class="q-hint" id="q-hint"></div>
+    <div class="q-main" id="q-main">…</div>
+  </div>
+  <div class="options" id="q-opts"></div>
+</div>
+
+<!-- ── RESULT ── -->
+<div class="screen result-screen" id="s-result">
+  <div class="result-emoji" id="r-emoji">🎉</div>
+  <div class="result-title">Hoàn thành!</div>
+  <div class="result-score" id="r-score">0/0</div>
+  <div class="result-pct" id="r-pct">0%</div>
+  <div class="result-label" id="r-label"></div>
+  <button class="btn-primary" onclick="restartQuiz()">Làm lại bài này</button>
+  <button class="btn-secondary" onclick="goTo('s-menu')">Quay về menu</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  DỮ LIỆU TỪ VỰNG MINNA N4 (BÀI 26 – 50)
+// ═══════════════════════════════════════════════
+const DB = [
+  { lesson:26, topic:"Giải thích nguyên do, nhờ vả (~んです)", vocabulary:[
+    {word:"みます",kanji:"診ます",meaning:"Khám bệnh / Xem xét"},
+    {word:"さがします",kanji:"探します",meaning:"Tìm kiếm"},
+    {word:"おくれます",kanji:"遅れます",meaning:"Muộn / Chậm trễ"},
+    {word:"まにあいます",kanji:"間に合います",meaning:"Kịp (giờ)"},
+    {word:"やります",kanji:"",meaning:"Làm / Thực hiện"},
+    {word:"さんかします",kanji:"参加します",meaning:"Tham gia"},
+    {word:"もうしこみます",kanji:"申し込みます",meaning:"Đăng ký"},
+    {word:"つごうがいい",kanji:"都合がいい",meaning:"Thuận tiện (thời gian)"},
+    {word:"つごうがわるい",kanji:"都合が悪い",meaning:"Bất tiện (thời gian)"},
+    {word:"きぶんがいい",kanji:"気分がいい",meaning:"Tâm trạng thoải mái / Khỏe khoắn"},
+    {word:"きぶんがわるい",kanji:"気分が悪い",meaning:"Khó chịu / Không khỏe"},
+    {word:"しんぶんしゃ",kanji:"新聞社",meaning:"Tòa soạn báo"},
+    {word:"じゅうどう",kanji:"柔道",meaning:"Môn Judo / Nhu đạo"},
+    {word:"うんどうかい",kanji:"運動会",meaning:"Hội thao / Đại hội thể thao"},
+    {word:"ばしょ",kanji:"場所",meaning:"Địa điểm / Nơi chốn"},
+    {word:"ボランティア",kanji:"",meaning:"Tình nguyện viên"},
+    {word:"べん",kanji:"弁",meaning:"Tiếng địa phương / Giọng"},
+    {word:"こんど",kanji:"今度",meaning:"Lần tới / Lần này"},
+    {word:"ずいぶん",kanji:"",meaning:"Khá là / Rất"},
+    {word:"ちょくせつ",kanji:"直接",meaning:"Trực tiếp"},
+    {word:"いつでも",kanji:"",meaning:"Bất cứ lúc nào"},
+    {word:"どこでも",kanji:"",meaning:"Bất cứ nơi nào"},
+    {word:"だれでも",kanji:"",meaning:"Bất cứ ai"},
+    {word:"なんでも",kanji:"何でも",meaning:"Bất cứ cái gì"},
+    {word:"ごみ",kanji:"",meaning:"Rác"},
+    {word:"もえるごみ",kanji:"燃えるごみ",meaning:"Rác cháy được"},
+    {word:"おきば",kanji:"置き場",meaning:"Chỗ để / Nơi đặt"},
+    {word:"よこ",kanji:"横",meaning:"Bên cạnh / Chiều ngang"},
+    {word:"びん",kanji:"瓶",meaning:"Chai / Lọ"},
+    {word:"かん",kanji:"缶",meaning:"Lon / Hộp kim loại"},
+    {word:"ガス",kanji:"",meaning:"Ga / Khí đốt"},
+    {word:"れんらくします",kanji:"連絡します",meaning:"Liên lạc"}
+  ]},
+  { lesson:27, topic:"Thể khả năng (可能形)", vocabulary:[
+    {word:"かいます",kanji:"飼います",meaning:"Nuôi (động vật)"},
+    {word:"たてます",kanji:"建てます",meaning:"Xây dựng / Dựng lên"},
+    {word:"はしります",kanji:"走ります",meaning:"Chạy (trên đường)"},
+    {word:"とります",kanji:"取ります",meaning:"Xin nghỉ (nghỉ phép)"},
+    {word:"みえます",kanji:"見えます",meaning:"Nhìn thấy / Có thể nhìn thấy"},
+    {word:"きこえます",kanji:"聞こえます",meaning:"Nghe thấy / Có thể nghe thấy"},
+    {word:"できます",kanji:"",meaning:"Được hoàn thành / Được xây xong"},
+    {word:"ひらきます",kanji:"開きます",meaning:"Mở (lớp học, phòng khám)"},
+    {word:"ペット",kanji:"",meaning:"Thú cưng"},
+    {word:"とり",kanji:"鳥",meaning:"Con chim"},
+    {word:"こえ",kanji:"声",meaning:"Tiếng / Giọng nói"},
+    {word:"なみ",kanji:"波",meaning:"Sóng biển"},
+    {word:"はなび",kanji:"花火",meaning:"Pháo hoa"},
+    {word:"けしき",kanji:"景色",meaning:"Phong cảnh"},
+    {word:"ひるま",kanji:"昼間",meaning:"Ban ngày"},
+    {word:"むかし",kanji:"昔",meaning:"Ngày xưa / Thời xưa"},
+    {word:"どうぐ",kanji:"道具",meaning:"Dụng cụ / Công cụ"},
+    {word:"じどうはんばいき",kanji:"自動販売機",meaning:"Máy bán hàng tự động"},
+    {word:"つうしんはんばい",kanji:"通信販売",meaning:"Bán hàng qua mạng / Đặt mua hàng"},
+    {word:"クリーニング",kanji:"",meaning:"Giặt là / Giặt khô"},
+    {word:"マンション",kanji:"",meaning:"Chung cư cao cấp"},
+    {word:"キッチン",kanji:"",meaning:"Nhà bếp"},
+    {word:"パーティールーム",kanji:"",meaning:"Phòng tiệc"},
+    {word:"～ご",kanji:"～後",meaning:"Sau ~ (thời gian)"},
+    {word:"～しか",kanji:"",meaning:"Chỉ ~ (đi với phủ định)"},
+    {word:"ほかの",kanji:"他の",meaning:"Khác"},
+    {word:"はっきり",kanji:"",meaning:"Rõ ràng"},
+    {word:"ほとんど",kanji:"",meaning:"Hầu như / Hầu hết"}
+  ]},
+  { lesson:28, topic:"Hành động song song (~ながら, ~し~し)", vocabulary:[
+    {word:"うれます",kanji:"売れます",meaning:"Bán chạy"},
+    {word:"おどります",kanji:"踊ります",meaning:"Nhảy múa"},
+    {word:"かみます",kanji:"",meaning:"Nhai / Cắn"},
+    {word:"えらびます",kanji:"選びます",meaning:"Lựa chọn"},
+    {word:"ちがいます",kanji:"違います",meaning:"Khác nhau"},
+    {word:"かよいます",kanji:"通います",meaning:"Đi lại thường xuyên (đi học/đi làm)"},
+    {word:"メモします",kanji:"",meaning:"Ghi chép / Note"},
+    {word:"まじめな",kanji:"",meaning:"Nghiêm túc / Chăm chỉ"},
+    {word:"ねっしんな",kanji:"熱心な",meaning:"Nhiệt tình / Say mê"},
+    {word:"えらい",kanji:"偉い",meaning:"Vĩ đại / Giỏi giang"},
+    {word:"ちょうどいい",kanji:"",meaning:"Vừa vặn / Vừa đúng"},
+    {word:"しゅうかん",kanji:"習慣",meaning:"Tập quán / Thói quen"},
+    {word:"けいけん",kanji:"経験",meaning:"Kinh nghiệm"},
+    {word:"ちから",kanji:"力",meaning:"Sức lực / Năng lực"},
+    {word:"にんき",kanji:"人気",meaning:"Được yêu thích / Sự mến mộ"},
+    {word:"かたち",kanji:"形",meaning:"Hình dáng"},
+    {word:"いろ",kanji:"色",meaning:"Màu sắc"},
+    {word:"あじ",kanji:"味",meaning:"Mùi vị"},
+    {word:"ガム",kanji:"",meaning:"Kẹo cao su"},
+    {word:"しなもの",kanji:"品物",meaning:"Hàng hóa"},
+    {word:"ねだん",kanji:"値段",meaning:"Giá cả"},
+    {word:"きゅうりょう",kanji:"給料",meaning:"Tiền lương"},
+    {word:"ボーナス",kanji:"",meaning:"Tiền thưởng"},
+    {word:"ばんぐみ",kanji:"番組",meaning:"Chương trình (TV, phát thanh)"},
+    {word:"ドラマ",kanji:"",meaning:"Phim truyền hình"},
+    {word:"かしゅ",kanji:"歌手",meaning:"Ca sĩ"},
+    {word:"しょうせつ",kanji:"小説",meaning:"Tiểu thuyết"},
+    {word:"しょうせつか",kanji:"小説家",meaning:"Nhà văn / Tiểu thuyết gia"},
+    {word:"むすこ",kanji:"息子",meaning:"Con trai (mình)"},
+    {word:"むすめ",kanji:"娘",meaning:"Con gái (mình)"},
+    {word:"しばらく",kanji:"",meaning:"Một lúc / Một thời gian ngắn"},
+    {word:"たいてい",kanji:"",meaning:"Thường thường / Đa phần"},
+    {word:"それに",kanji:"",meaning:"Hơn nữa / Thêm vào đó"},
+    {word:"それで",kanji:"",meaning:"Vì thế nên / Do đó"}
+  ]},
+  { lesson:29, topic:"Tự động từ, trạng thái kết quả (~ています)", vocabulary:[
+    {word:"あきます",kanji:"開きます",meaning:"Mở (cửa tự mở)"},
+    {word:"しまります",kanji:"閉まります",meaning:"Đóng (cửa tự đóng)"},
+    {word:"つきます",kanji:"",meaning:"Bật / Sáng (đèn tự bật)"},
+    {word:"きえます",kanji:"消えます",meaning:"Tắt (đèn tự tắt)"},
+    {word:"こみます",kanji:"込みます",meaning:"Đông đúc"},
+    {word:"すきます",kanji:"",meaning:"Vắng vẻ / Thoáng đãng"},
+    {word:"こわれます",kanji:"壊れます",meaning:"Hỏng (đồ vật tự hỏng)"},
+    {word:"われます",kanji:"割れます",meaning:"Vỡ (cốc, kính)"},
+    {word:"おれます",kanji:"折れます",meaning:"Gãy (cây, cành)"},
+    {word:"やぶれます",kanji:"破れます",meaning:"Rách (giấy, túi)"},
+    {word:"よごれます",kanji:"汚れます",meaning:"Bẩn / Bị vấy bẩn"},
+    {word:"つきます",kanji:"付きます",meaning:"Được đính / Dính kèm"},
+    {word:"はずれます",kanji:"外れます",meaning:"Tuột / Bung ra"},
+    {word:"とまります",kanji:"止まります",meaning:"Dừng lại (xe tự dừng)"},
+    {word:"まちがえます",kanji:"",meaning:"Nhầm lẫn / Sai sót"},
+    {word:"おとします",kanji:"落とします",meaning:"Làm rơi"},
+    {word:"かかります",kanji:"",meaning:"Khóa (chìa khóa tự khóa)"},
+    {word:"おさら",kanji:"お皿",meaning:"Cái đĩa"},
+    {word:"おちゃわん",kanji:"",meaning:"Cái bát / Chén"},
+    {word:"コップ",kanji:"",meaning:"Cái cốc"},
+    {word:"ガラス",kanji:"",meaning:"Thủy tinh / Kính"},
+    {word:"ふくろ",kanji:"袋",meaning:"Cái túi"},
+    {word:"さいふ",kanji:"財布",meaning:"Ví tiền"},
+    {word:"えだ",kanji:"枝",meaning:"Cành cây"},
+    {word:"えきいん",kanji:"駅員",meaning:"Nhân viên nhà ga"},
+    {word:"へん",kanji:"辺",meaning:"Vùng / Khu vực xung quanh"},
+    {word:"このくらい",kanji:"",meaning:"Cỡ khoảng ngần này"},
+    {word:"おさきにどうぞ",kanji:"お先にどうぞ",meaning:"Xin mời đi trước"},
+    {word:"わすれもの",kanji:"忘れ物",meaning:"Đồ để quên"},
+    {word:"おぼえていません",kanji:"覚えていません",meaning:"Tôi không nhớ"}
+  ]},
+  { lesson:30, topic:"Tha động từ, chuẩn bị sẵn (~てあります, ~ておきます)", vocabulary:[
+    {word:"はります",kanji:"貼ります",meaning:"Dán / Dán lên"},
+    {word:"かけます",kanji:"掛けます",meaning:"Treo (tranh, đồng hồ)"},
+    {word:"かざります",kanji:"飾ります",meaning:"Trang trí"},
+    {word:"ならべます",kanji:"並べます",meaning:"Sắp xếp / Xếp thành hàng"},
+    {word:"うえます",kanji:"植えます",meaning:"Trồng (cây)"},
+    {word:"もどします",kanji:"戻します",meaning:"Đưa về chỗ cũ / Hoàn lại"},
+    {word:"まとめます",kanji:"",meaning:"Thu gom / Tóm tắt lại"},
+    {word:"かたづけます",kanji:"片づけます",meaning:"Dọn dẹp ngăn nắp"},
+    {word:"しまいます",kanji:"",meaning:"Cất vào / Để vào chỗ chứa"},
+    {word:"きめます",kanji:"決めます",meaning:"Quyết định"},
+    {word:"しらせます",kanji:"知らせます",meaning:"Thông báo / Báo tin"},
+    {word:"そうだんします",kanji:"相談します",meaning:"Bàn bạc / Trao đổi ý kiến"},
+    {word:"よしゅうします",kanji:"予習します",meaning:"Chuẩn bị bài trước"},
+    {word:"ふくしゅうします",kanji:"復習します",meaning:"Ôn tập bài cũ"},
+    {word:"そのままにします",kanji:"",meaning:"Để nguyên như thế"},
+    {word:"じゅぎょう",kanji:"授業",meaning:"Tiết học / Giờ học"},
+    {word:"こうぎ",kanji:"講義",meaning:"Bài giảng"},
+    {word:"よてい",kanji:"予定",meaning:"Kế hoạch / Dự định"},
+    {word:"あんないしょ",kanji:"案内書",meaning:"Sách hướng dẫn"},
+    {word:"カレンダー",kanji:"",meaning:"Tờ lịch"},
+    {word:"ポスター",kanji:"",meaning:"Tờ áp phích / Poster"},
+    {word:"よていひょう",kanji:"予定表",meaning:"Lịch trình / Bảng kế hoạch"},
+    {word:"ごみばこ",kanji:"ごみ箱",meaning:"Thùng rác"},
+    {word:"にんぎょう",kanji:"人形",meaning:"Búp bê"},
+    {word:"かびん",kanji:"花瓶",meaning:"Lọ hoa / Bình hoa"},
+    {word:"かがみ",kanji:"鏡",meaning:"Gương soi"},
+    {word:"ひきだし",kanji:"引き出し",meaning:"Ngăn kéo"},
+    {word:"げんかん",kanji:"玄関",meaning:"Cửa vào / Tiền sảnh"},
+    {word:"ろうか",kanji:"廊下",meaning:"Hành lang"},
+    {word:"かべ",kanji:"壁",meaning:"Bức tường"},
+    {word:"いけ",kanji:"池",meaning:"Cái ao"},
+    {word:"もとのところ",kanji:"元の所",meaning:"Chỗ ban đầu"},
+    {word:"まわり",kanji:"周り",meaning:"Xung quanh"},
+    {word:"まんなか",kanji:"真ん中",meaning:"Chính giữa"},
+    {word:"すみ",kanji:"隅",meaning:"Góc (bên trong)"},
+    {word:"まだ",kanji:"",meaning:"Vẫn còn"}
+  ]},
+  { lesson:31, topic:"Thể ý chí (意向形, ~つもり, ~よてい)", vocabulary:[
+    {word:"はじまります",kanji:"始まります",meaning:"Bắt đầu (tự bắt đầu)"},
+    {word:"つづけます",kanji:"続けます",meaning:"Tiếp tục / Duy trì"},
+    {word:"みつけます",kanji:"見つけます",meaning:"Tìm thấy"},
+    {word:"うけます",kanji:"受けます",meaning:"Dự thi / Nhận"},
+    {word:"にゅうがくします",kanji:"入学します",meaning:"Nhập học / Vào đại học"},
+    {word:"そつぎょうします",kanji:"卒業します",meaning:"Tốt nghiệp"},
+    {word:"しゅっせきします",kanji:"出席します",meaning:"Có mặt / Tham dự"},
+    {word:"きゅうけいします",kanji:"休憩します",meaning:"Nghỉ giải lao"},
+    {word:"れんきゅう",kanji:"連休",meaning:"Kỳ nghỉ dài ngày"},
+    {word:"さくぶん",kanji:"作文",meaning:"Bài văn / Đoạn văn"},
+    {word:"はっぴょう",kanji:"発表",meaning:"Phát biểu / Thuyết trình"},
+    {word:"てんらんかい",kanji:"展覧会",meaning:"Triển lãm"},
+    {word:"けっこんしき",kanji:"結婚式",meaning:"Lễ cưới"},
+    {word:"そうしき",kanji:"葬式",meaning:"Đám tang"},
+    {word:"しき",kanji:"式",meaning:"Buổi lễ"},
+    {word:"ほんしゃ",kanji:"本社",meaning:"Trụ sở chính của công ty"},
+    {word:"してん",kanji:"支店",meaning:"Chi nhánh công ty"},
+    {word:"きょうかい",kanji:"教会",meaning:"Nhà thờ"},
+    {word:"だいがくいん",kanji:"大学院",meaning:"Cao học / Viện sau đại học"},
+    {word:"どうぶつえん",kanji:"動物園",meaning:"Sở thú / Vườn bách thú"},
+    {word:"おんせん",kanji:"温泉",meaning:"Suối nước nóng"},
+    {word:"かえり",kanji:"帰り",meaning:"Lúc về"},
+    {word:"おこさん",kanji:"お子さん",meaning:"Con (người khác)"},
+    {word:"ずっと",kanji:"",meaning:"Suốt / Liền mạch"},
+    {word:"のこります",kanji:"残ります",meaning:"Còn lại / Sót lại"},
+    {word:"つきに",kanji:"月に",meaning:"Mỗi tháng / Một tháng"}
+  ]},
+  { lesson:32, topic:"Lời khuyên, phán đoán (~ほうがいい, ~でしょう, ~かもしれません)", vocabulary:[
+    {word:"うんどうします",kanji:"運動します",meaning:"Vận động / Tập thể dục"},
+    {word:"せいこうします",kanji:"成功します",meaning:"Thành công"},
+    {word:"しっぱいします",kanji:"失敗します",meaning:"Thất bại / Hỏng việc"},
+    {word:"ごうかくします",kanji:"合格します",meaning:"Thi đỗ / Đạt chỉ tiêu"},
+    {word:"もどります",kanji:"戻ります",meaning:"Quay lại / Trở về"},
+    {word:"やみます",kanji:"",meaning:"Tạnh (mưa) / Ngừng"},
+    {word:"はれます",kanji:"晴れます",meaning:"Trời nắng / Nắng ráo"},
+    {word:"くもります",kanji:"曇ります",meaning:"Trời nhiều mây / U ám"},
+    {word:"ふきます",kanji:"吹きます",meaning:"Thổi (gió)"},
+    {word:"なおります",kanji:"治ります／直ります",meaning:"Khỏi bệnh / Được sửa xong"},
+    {word:"つづきます",kanji:"続きます",meaning:"Kéo dài / Tiếp diễn"},
+    {word:"ひやします",kanji:"冷やします",meaning:"Làm mát / Làm lạnh"},
+    {word:"しんぱいな",kanji:"心配な",meaning:"Lo lắng"},
+    {word:"じゅうぶんな",kanji:"十分な",meaning:"Đầy đủ"},
+    {word:"おかしい",kanji:"",meaning:"Kỳ lạ / Buồn cười"},
+    {word:"うるさい",kanji:"",meaning:"Ồn ào / Phiền phức"},
+    {word:"やけど",kanji:"",meaning:"Bị bỏng"},
+    {word:"けが",kanji:"",meaning:"Vết thương / Chấn thương"},
+    {word:"せき",kanji:"",meaning:"Ho / Tiếng ho"},
+    {word:"インフルエンザ",kanji:"",meaning:"Cúm mùa"},
+    {word:"そら",kanji:"空",meaning:"Bầu trời"},
+    {word:"たいよう",kanji:"太陽",meaning:"Mặt trời"},
+    {word:"ほし",kanji:"星",meaning:"Ngôi sao"},
+    {word:"つき",kanji:"月",meaning:"Mặt trăng"},
+    {word:"かぜ",kanji:"風",meaning:"Gió"},
+    {word:"きた",kanji:"北",meaning:"Phía Bắc"},
+    {word:"みなみ",kanji:"南",meaning:"Phía Nam"},
+    {word:"にし",kanji:"西",meaning:"Phía Tây"},
+    {word:"ひがし",kanji:"東",meaning:"Phía Đông"},
+    {word:"すいどう",kanji:"水道",meaning:"Nước máy"},
+    {word:"こんや",kanji:"今夜",meaning:"Tối nay"},
+    {word:"ゆうがた",kanji:"夕方",meaning:"Chiều tối"},
+    {word:"もしかしたら",kanji:"",meaning:"Có thể / Biết đâu chừng"}
+  ]},
+  { lesson:33, topic:"Thể mệnh lệnh, thể cấm chỉ (命令形, 禁止形)", vocabulary:[
+    {word:"にげます",kanji:"逃げます",meaning:"Trốn chạy / Tẩu thoát"},
+    {word:"さわぎます",kanji:"騒ぎます",meaning:"Làm ồn / Gây náo loạn"},
+    {word:"あきらめます",kanji:"",meaning:"Từ bỏ / Bỏ cuộc"},
+    {word:"なげます",kanji:"投げます",meaning:"Ném"},
+    {word:"まもります",kanji:"守ります",meaning:"Bảo vệ / Tuân thủ"},
+    {word:"あげます",kanji:"上げます",meaning:"Nâng lên / Tăng lên"},
+    {word:"さげます",kanji:"下げます",meaning:"Hạ xuống / Giảm xuống"},
+    {word:"つたえます",kanji:"伝えます",meaning:"Truyền đạt lại"},
+    {word:"ちゅういします",kanji:"注意します",meaning:"Nhắc nhở / Chú ý"},
+    {word:"はずします",kanji:"外します",meaning:"Rời khỏi (chỗ ngồi)"},
+    {word:"だめな",kanji:"",meaning:"Không được / Hỏng"},
+    {word:"せき",kanji:"席",meaning:"Chỗ ngồi"},
+    {word:"ファイト",kanji:"",meaning:"Cố lên / Quyết tâm"},
+    {word:"マーク",kanji:"",meaning:"Ký hiệu / Dấu hiệu"},
+    {word:"ボール",kanji:"",meaning:"Quả bóng"},
+    {word:"せんたくき",kanji:"洗濯機",meaning:"Máy giặt"},
+    {word:"きそく",kanji:"規則",meaning:"Quy tắc / Quy định"},
+    {word:"きけん",kanji:"危険",meaning:"Nguy hiểm"},
+    {word:"しようきんし",kanji:"使用禁止",meaning:"Cấm sử dụng"},
+    {word:"たちいりきんし",kanji:"立入禁止",meaning:"Cấm vào"},
+    {word:"ひじょうぐち",kanji:"非常口",meaning:"Cửa thoát hiểm"},
+    {word:"むりょう",kanji:"無料",meaning:"Miễn phí"},
+    {word:"わりびき",kanji:"割引",meaning:"Giảm giá"},
+    {word:"しょうようちゅう",kanji:"使用中",meaning:"Đang sử dụng"},
+    {word:"ぼしゅうちゅう",kanji:"募集中",meaning:"Đang tuyển sinh / Đang tuyển mộ"},
+    {word:"どういう",kanji:"",meaning:"Như thế nào / Nghĩa gì"}
+  ]},
+  { lesson:34, topic:"Làm theo chỉ dẫn (~とおりに, ~あとで)", vocabulary:[
+    {word:"みがきます",kanji:"磨きます",meaning:"Đánh (răng) / Mài bóng"},
+    {word:"くみたてます",kanji:"組み立てます",meaning:"Lắp ráp / Lắp ghép"},
+    {word:"おります",kanji:"折ります",meaning:"Gấp (giấy) / Bẻ gãy"},
+    {word:"きがつきます",kanji:"気がつきます",meaning:"Nhận ra / Để ý thấy"},
+    {word:"つけます",kanji:"",meaning:"Chấm / Rưới (nước sốt)"},
+    {word:"みつかります",kanji:"見つかります",meaning:"Được tìm thấy"},
+    {word:"しつもんします",kanji:"質問します",meaning:"Hỏi / Đặt câu hỏi"},
+    {word:"さします",kanji:"差します",meaning:"Che (ô, dù)"},
+    {word:"スポーツクラブ",kanji:"",meaning:"Câu lạc bộ thể thao"},
+    {word:"おしろ",kanji:"お城",meaning:"Lâu đài / Thành"},
+    {word:"せつめいしょ",kanji:"説明書",meaning:"Sách hướng dẫn sử dụng"},
+    {word:"ず",kanji:"図",meaning:"Hình vẽ / Sơ đồ"},
+    {word:"せん",kanji:"線",meaning:"Đường kẻ"},
+    {word:"やじるし",kanji:"矢印",meaning:"Mũi tên chỉ hướng"},
+    {word:"くろ",kanji:"黒",meaning:"Màu đen"},
+    {word:"しろ",kanji:"白",meaning:"Màu trắng"},
+    {word:"あか",kanji:"赤",meaning:"Màu đỏ"},
+    {word:"あお",kanji:"青",meaning:"Màu xanh da trời"},
+    {word:"こん",kanji:"紺",meaning:"Màu xanh lam đậm"},
+    {word:"きいろ",kanji:"黄色",meaning:"Màu vàng"},
+    {word:"しょうゆ",kanji:"",meaning:"Nước tương Nhật"},
+    {word:"ソース",kanji:"",meaning:"Nước sốt"},
+    {word:"～か～",kanji:"",meaning:"~ hoặc là ~"},
+    {word:"ゆうべ",kanji:"",meaning:"Tối qua / Đêm qua"},
+    {word:"さっき",kanji:"",meaning:"Vừa nãy / Cách đây ít phút"}
+  ]},
+  { lesson:35, topic:"Thể điều kiện (条件形: ~ば, ~なら)", vocabulary:[
+    {word:"さきます",kanji:"咲きます",meaning:"Nở (hoa)"},
+    {word:"かわります",kanji:"変わります",meaning:"Thay đổi (màu sắc)"},
+    {word:"こまります",kanji:"困ります",meaning:"Gặp khó khăn / Rắc rối"},
+    {word:"つけます",kanji:"付けます",meaning:"Vẽ (dấu tròn) / Đánh dấu"},
+    {word:"ひろいます",kanji:"拾います",meaning:"Nhặt lên / Nhặt được"},
+    {word:"かかります",kanji:"",meaning:"Có điện thoại gọi đến"},
+    {word:"らく",kanji:"楽",meaning:"Nhàn nhã / Dễ chịu"},
+    {word:"ただしい",kanji:"正しい",meaning:"Đúng đắn / Chính xác"},
+    {word:"めずらしい",kanji:"珍しい",meaning:"Hiếm có / Độc lạ"},
+    {word:"かた",kanji:"方",meaning:"Vị khách / Người (lịch sự)"},
+    {word:"むこう",kanji:"向こう",meaning:"Phía bên kia / Phía đối diện"},
+    {word:"しま",kanji:"島",meaning:"Hòn đảo"},
+    {word:"むら",kanji:"村",meaning:"Ngôi làng"},
+    {word:"みなと",kanji:"港",meaning:"Cảng biển"},
+    {word:"きんじょ",kanji:"近所",meaning:"Hàng xóm / Khu lân cận"},
+    {word:"おくじょう",kanji:"屋上",meaning:"Sân thượng"},
+    {word:"かいがい",kanji:"海外",meaning:"Hải ngoại / Nước ngoài"},
+    {word:"やまのぼり",kanji:"山登り",meaning:"Leo núi"},
+    {word:"ハイキング",kanji:"",meaning:"Đi bộ dã ngoại"},
+    {word:"きかい",kanji:"機会",meaning:"Cơ hội"},
+    {word:"きょか",kanji:"許可",meaning:"Sự cho phép / Giấy phép"},
+    {word:"まる",kanji:"丸",meaning:"Hình tròn"},
+    {word:"そうさ",kanji:"操作",meaning:"Thao tác / Vận hành máy"},
+    {word:"ほうほう",kanji:"方法",meaning:"Phương pháp / Cách thức"},
+    {word:"せつび",kanji:"設備",meaning:"Thiết bị / Trang thiết bị"},
+    {word:"カーテン",kanji:"",meaning:"Rèm cửa"},
+    {word:"ひも",kanji:"",meaning:"Sợi dây"},
+    {word:"ふた",kanji:"",meaning:"Cái nắp"},
+    {word:"は",kanji:"葉",meaning:"Chiếc lá"},
+    {word:"もっと",kanji:"",meaning:"Hơn nữa"}
+  ]},
+  { lesson:36, topic:"Mục đích hành động (~ように, ~なくなる)", vocabulary:[
+    {word:"あいます",kanji:"合います",meaning:"Gặp phải (tai nạn)"},
+    {word:"ちょきんします",kanji:"貯金します",meaning:"Tiết kiệm tiền"},
+    {word:"すぎます",kanji:"過ぎます",meaning:"Quá (giờ) / Đi qua"},
+    {word:"なれます",kanji:"慣れます",meaning:"Quen với (tập quán)"},
+    {word:"くさります",kanji:"腐ります",meaning:"Bị thiu / Bị ôi thiu"},
+    {word:"ラッシュ",kanji:"",meaning:"Giờ cao điểm"},
+    {word:"うちゅう",kanji:"宇宙",meaning:"Vũ trụ"},
+    {word:"きょく",kanji:"曲",meaning:"Bản nhạc / Khúc nhạc"},
+    {word:"まいしゅう",kanji:"毎週",meaning:"Hàng tuần"},
+    {word:"まいげつ",kanji:"毎月",meaning:"Hàng tháng"},
+    {word:"まいとし",kanji:"毎年",meaning:"Hàng năm"},
+    {word:"このごろ",kanji:"",meaning:"Dạo gần đây"},
+    {word:"やっと",kanji:"",meaning:"Cuối cùng thì"},
+    {word:"かなり",kanji:"",meaning:"Khá là"},
+    {word:"かならず",kanji:"必ず",meaning:"Nhất định / Chắc chắn"},
+    {word:"ぜったいに",kanji:"絶対に",meaning:"Tuyệt đối"},
+    {word:"じょうずに",kanji:"上手にと",meaning:"Khéo léo / Giỏi giang"},
+    {word:"できるだけ",kanji:"",meaning:"Trong khả năng có thể"},
+    {word:"とくべつな",kanji:"特別な",meaning:"Đặc biệt"}
+  ]},
+  { lesson:37, topic:"Thể bị động (受身形)", vocabulary:[
+    {word:"ほめます",kanji:"褒めます",meaning:"Khen ngợi"},
+    {word:"しかります",kanji:"",meaning:"Mắng mỏ / La mắng"},
+    {word:"さそいます",kanji:"誘います",meaning:"Mời / Rủ rê"},
+    {word:"おこします",kanji:"起こします",meaning:"Đánh thức dậy"},
+    {word:"たのみます",kanji:"頼みます",meaning:"Nhờ vả / Yêu cầu"},
+    {word:"ちゅういします",kanji:"注意します",meaning:"Cảnh cáo / Nhắc nhở"},
+    {word:"とります",kanji:"盗ります",meaning:"Trộm cắp / Lấy cắp"},
+    {word:"ふみます",kanji:"踏みます",meaning:"Giẫm lên / Đạp lên"},
+    {word:"こわします",kanji:"壊します",meaning:"Phá hoại / Làm hỏng"},
+    {word:"よごします",kanji:"汚します",meaning:"Làm bẩn"},
+    {word:"おこないます",kanji:"行います",meaning:"Tổ chức / Tiến hành"},
+    {word:"ゆしゅつします",kanji:"輸出します",meaning:"Xuất khẩu"},
+    {word:"ゆにゅうします",kanji:"輸入します",meaning:"Nhập khẩu"},
+    {word:"ほんやくします",kanji:"翻訳します",meaning:"Dịch thuật (sách, văn bản)"},
+    {word:"はつめいします",kanji:"発明します",meaning:"Phát minh"},
+    {word:"はっけんします",kanji:"発見します",meaning:"Phát hiện / Tìm ra"},
+    {word:"せっけいします",kanji:"設計します",meaning:"Thiết kế (bản vẽ kỹ thuật)"},
+    {word:"こめ",kanji:"米",meaning:"Gạo / Hạt gạo"},
+    {word:"むぎ",kanji:"麦",meaning:"Lúa mì / Lúa mạch"},
+    {word:"せきゆ",kanji:"石油",meaning:"Dầu mỏ / Dầu hỏa"},
+    {word:"げんりょう",kanji:"原料",meaning:"Nguyên liệu"},
+    {word:"デート",kanji:"",meaning:"Buổi hẹn hò"},
+    {word:"どろぼう",kanji:"泥棒",meaning:"Kẻ trộm"},
+    {word:"けいかん",kanji:"警官",meaning:"Cảnh sát"},
+    {word:"けんちくか",kanji:"建築家",meaning:"Kiến trúc sư"},
+    {word:"かがくしゃ",kanji:"科学者",meaning:"Nhà khoa học"},
+    {word:"まんが",kanji:"漫画",meaning:"Truyện tranh"},
+    {word:"せかいじゅう",kanji:"世界中",meaning:"Trên khắp thế giới"}
+  ]},
+  { lesson:38, topic:"Danh từ hóa động từ (~のは, ~のを, ~のに)", vocabulary:[
+    {word:"そだてます",kanji:"育てます",meaning:"Nuôi dưỡng / Nuôi nấng"},
+    {word:"はこびます",kanji:"運びます",meaning:"Vận chuyển / Chở"},
+    {word:"なくなります",kanji:"亡くなります",meaning:"Qua đời / Mất (người)"},
+    {word:"にゅういんします",kanji:"入院します",meaning:"Nhập viện"},
+    {word:"たいいんします",kanji:"退院します",meaning:"Xuất viện"},
+    {word:"でんげんをいれます",kanji:"電源を入れます",meaning:"Bật công tắc nguồn"},
+    {word:"でんげんをきります",kanji:"電源を切ります",meaning:"Tắt công tắc nguồn"},
+    {word:"かぎをかけます",kanji:"鍵を掛けます",meaning:"Khóa cửa"},
+    {word:"きもちがいい",kanji:"気持ちがいい",meaning:"Dễ chịu / Sảng khoái"},
+    {word:"きもちがわるい",kanji:"気持ちが悪い",meaning:"Khó chịu / Ghê tởm"},
+    {word:"おおきな",kanji:"大きな",meaning:"To / Lớn"},
+    {word:"ちいさな",kanji:"小さな",meaning:"Nhỏ / Bé"},
+    {word:"あかちゃん",kanji:"赤ちゃん",meaning:"Em bé mới sinh"},
+    {word:"しょうがっこう",kanji:"小学校",meaning:"Trường tiểu học"},
+    {word:"ちゅうがっこう",kanji:"中学校",meaning:"Trường trung học cơ sở"},
+    {word:"えきまえ",kanji:"駅前",meaning:"Khu vực trước nhà ga"},
+    {word:"かいがん",kanji:"海岸",meaning:"Bờ biển"},
+    {word:"うそ",kanji:"",meaning:"Lời nói dối"},
+    {word:"しょるい",kanji:"書類",meaning:"Giấy tờ / Hồ sơ"},
+    {word:"でんげん",kanji:"電源",meaning:"Nguồn điện"},
+    {word:"～せい",kanji:"～製",meaning:"Sản xuất tại ~ / Hàng ~"},
+    {word:"あ、いけない",kanji:"",meaning:"Ôi hỏng rồi / Chết rồi"},
+    {word:"かいらん",kanji:"回覧",meaning:"Tập tin truyền tay xem"}
+  ]},
+  { lesson:39, topic:"Chỉ nguyên nhân, lý do (~て, ~ので)", vocabulary:[
+    {word:"こたえます",kanji:"答えます",meaning:"Trả lời (câu hỏi)"},
+    {word:"たおれます",kanji:"倒れます",meaning:"Đổ / Ngã gục"},
+    {word:"とおります",kanji:"通ります",meaning:"Đi qua (con đường)"},
+    {word:"しにます",kanji:"死にます",meaning:"Chết"},
+    {word:"びっくりします",kanji:"",meaning:"Giật mình / Bất ngờ"},
+    {word:"がっかりします",kanji:"",meaning:"Thất vọng"},
+    {word:"あんしんします",kanji:"安心します",meaning:"Yên tâm"},
+    {word:"ちこくします",kanji:"遅刻します",meaning:"Đến trễ / Muộn"},
+    {word:"そうたいします",kanji:"早退します",meaning:"Về sớm"},
+    {word:"けんかします",kanji:"",meaning:"Cãi nhau / Đánh nhau"},
+    {word:"りこんします",kanji:"離婚します",meaning:"Ly hôn"},
+    {word:"ふくざつな",kanji:"複雑な",meaning:"Phức tạp"},
+    {word:"じゃまな",kanji:"邪魔な",meaning:"Vướng víu / Cản trở"},
+    {word:"きたない",kanji:"汚い",meaning:"Bẩn thỉu / Dơ"},
+    {word:"うれしい",kanji:"",meaning:"Vui mừng / Sung sướng"},
+    {word:"かなしい",kanji:"悲しい",meaning:"Buồn bã"},
+    {word:"はずかしい",kanji:"恥ずかしい",meaning:"Xấu hổ / Ngượng ngùng"},
+    {word:"じしん",kanji:"地震",meaning:"Động đất"},
+    {word:"たいふう",kanji:"台風",meaning:"Bão nhiệt đới"},
+    {word:"かじ",kanji:"火事",meaning:"Hỏa hoạn / Cháy nhà"},
+    {word:"じこ",kanji:"事故",meaning:"Tai nạn"},
+    {word:"おみあい",kanji:"お見合い",meaning:"Xem mắt"},
+    {word:"でんわだい",kanji:"電話代",meaning:"Cước phí điện thoại"},
+    {word:"～だい",kanji:"～代",meaning:"Tiền phí ~"},
+    {word:"フロント",kanji:"",meaning:"Quầy lễ tân khách sạn"},
+    {word:"～ごうしつ",kanji:"～号室",meaning:"Phòng số ~"},
+    {word:"あせ",kanji:"汗",meaning:"Mồ hôi"},
+    {word:"タオル",kanji:"",meaning:"Khăn tắm / Khăn lau"},
+    {word:"おおぜい",kanji:"大勢",meaning:"Đông người"},
+    {word:"おつかれさまでした",kanji:"お疲れ様でした",meaning:"Bạn đã vất vả rồi"}
+  ]},
+  { lesson:40, topic:"Nghi vấn từ lồng vào câu (~か, ~かどうか)", vocabulary:[
+    {word:"かぞえます",kanji:"数えます",meaning:"Đếm"},
+    {word:"はかります",kanji:"測ります／量ります",meaning:"Đo / Cân trọng lượng"},
+    {word:"たしかめます",kanji:"確かめます",meaning:"Xác nhận / Kiểm tra lại"},
+    {word:"あいます",kanji:"合います",meaning:"Vừa vặn (kích cỡ)"},
+    {word:"しゅっぱつします",kanji:"出発します",meaning:"Xuất phát / Khởi hành"},
+    {word:"とうちゃくします",kanji:"到着します",meaning:"Đến nơi / Cập bến"},
+    {word:"よいます",kanji:"酔います",meaning:"Say rượu / Say xe"},
+    {word:"うまくいきます",kanji:"",meaning:"Diễn ra tốt đẹp / Thuận lợi"},
+    {word:"でます",kanji:"出ます",meaning:"Xuất hiện trong đề thi"},
+    {word:"そうだんします",kanji:"相談します",meaning:"Thảo luận / Bàn bạc"},
+    {word:"ひつような",kanji:"必要な",meaning:"Cần thiết"},
+    {word:"てんきよほう",kanji:"天気予報",meaning:"Dự báo thời tiết"},
+    {word:"ぼうねんかい",kanji:"忘年会",meaning:"Tiệc tất niên"},
+    {word:"しんねんかい",kanji:"新年会",meaning:"Tiệc tân niên / Đầu năm"},
+    {word:"にじかい",kanji:"二次会",meaning:"Tăng hai (sau bữa tiệc)"},
+    {word:"はっぴょうかい",kanji:"発表会",meaning:"Buổi báo cáo / Thuyết trình"},
+    {word:"たいかい",kanji:"大会",meaning:"Đại hội / Giải đấu"},
+    {word:"マラソン",kanji:"",meaning:"Chạy marathon"},
+    {word:"コンテスト",kanji:"",meaning:"Cuộc thi sắc đẹp/tài năng"},
+    {word:"おもて",kanji:"表",meaning:"Mặt trước / Bề mặt"},
+    {word:"うら",kanji:"裏",meaning:"Mặt sau / Phía sau"},
+    {word:"まちがい",kanji:"間違い",meaning:"Lỗi sai / Nhầm lẫn"},
+    {word:"きず",kanji:"傷",meaning:"Vết thương / Vết xước"},
+    {word:"ズボン",kanji:"",meaning:"Quần dài"},
+    {word:"おとしより",kanji:"お年寄り",meaning:"Người cao tuổi"},
+    {word:"ながさ",kanji:"長さ",meaning:"Chiều dài"},
+    {word:"おもさ",kanji:"重さ",meaning:"Trọng lượng / Sức nặng"},
+    {word:"たかさ",kanji:"高さ",meaning:"Chiều cao"},
+    {word:"おおきさ",kanji:"大きさ",meaning:"Độ lớn / Kích cỡ"}
+  ]},
+  { lesson:41, topic:"Kính ngữ cho - nhận (やる, いただく, くださる)", vocabulary:[
+    {word:"いただきます",kanji:"",meaning:"Nhận (khiêm nhường của もらいます)"},
+    {word:"くださいます",kanji:"",meaning:"Cho tôi (tôn kính của くれます)"},
+    {word:"やります",kanji:"",meaning:"Cho (cấp dưới, động vật, tưới cây)"},
+    {word:"よびます",kanji:"呼びます",meaning:"Gọi tên / Kêu gọi"},
+    {word:"とりかえます",kanji:"取り替えます",meaning:"Đổi lại / Thay thế"},
+    {word:"しんせつにします",kanji:"親切にします",meaning:"Đối xử tốt bụng / Thân thiện"},
+    {word:"かわいい",kanji:"",meaning:"Đáng yêu / Dễ thương"},
+    {word:"めずらしい",kanji:"珍しい",meaning:"Hiếm thấy"},
+    {word:"おいわい",kanji:"お祝い",meaning:"Lời chúc mừng / Quà mừng"},
+    {word:"おとしだま",kanji:"お年玉",meaning:"Tiền lì xì đầu năm"},
+    {word:"おみまい",kanji:"お見舞い",meaning:"Thăm hỏi người ốm"},
+    {word:"きょうみ",kanji:"興味",meaning:"Hứng thú / Quan tâm"},
+    {word:"じょうほう",kanji:"情報",meaning:"Thông tin"},
+    {word:"ぶんぽう",kanji:"文法",meaning:"Ngữ pháp"},
+    {word:"はつおん",kanji:"発音",meaning:"Phát âm"},
+    {word:"さる",kanji:"猿",meaning:"Con khỉ"},
+    {word:"えさ",kanji:"",meaning:"Thức ăn cho thú / Mồi"},
+    {word:"おもちゃ",kanji:"",meaning:"Đồ chơi"},
+    {word:"えほん",kanji:"絵本",meaning:"Sách tranh thiếu nhi"},
+    {word:"えはがき",kanji:"絵はがき",meaning:"Bưu thiếp tranh"},
+    {word:"ハンカチ",kanji:"",meaning:"Khăn mùi xoa / Khăn tay"},
+    {word:"くつした",kanji:"靴下",meaning:"Đôi tất / Đôi vớ"},
+    {word:"てぶくろ",kanji:"手袋",meaning:"Găng tay"},
+    {word:"ようちえん",kanji:"幼稚園",meaning:"Trường mẫu giáo"},
+    {word:"だんぼう",kanji:"暖房",meaning:"Lò sưởi / Máy sưởi"},
+    {word:"れいぼう",kanji:"冷房",meaning:"Máy điều hòa mát"},
+    {word:"おんど",kanji:"温度",meaning:"Nhiệt độ"},
+    {word:"このあいだ",kanji:"この間",meaning:"Hôm nọ / Gần đây"}
+  ]},
+  { lesson:42, topic:"Mục đích chuyên dụng (~ために, ~のに使う)", vocabulary:[
+    {word:"つつみます",kanji:"包みます",meaning:"Gói lại / Bọc lại"},
+    {word:"わかします",kanji:"沸かします",meaning:"Đun sôi (nước)"},
+    {word:"まぜます",kanji:"混ぜます",meaning:"Trộn đều / Khuấy"},
+    {word:"けいさんします",kanji:"計算します",meaning:"Tính toán số liệu"},
+    {word:"ならびます",kanji:"並びます",meaning:"Xếp hàng"},
+    {word:"じょうぶな",kanji:"丈夫な",meaning:"Bền chắc / Khỏe mạnh"},
+    {word:"アパート",kanji:"",meaning:"Căn hộ chung cư"},
+    {word:"べんごし",kanji:"弁護士",meaning:"Luật sư"},
+    {word:"おんがくか",kanji:"音楽家",meaning:"Nhạc sĩ"},
+    {word:"こどもたち",kanji:"子どもたち",meaning:"Các bạn nhỏ / Trẻ con"},
+    {word:"しぜん",kanji:"自然",meaning:"Tự nhiên / Thiên nhiên"},
+    {word:"きょういく",kanji:"教育",meaning:"Giáo dục"},
+    {word:"ぶんか",kanji:"文化",meaning:"Văn hóa"},
+    {word:"しゃかい",kanji:"社会",meaning:"Xã hội"},
+    {word:"せいじ",kanji:"政治",meaning:"Chính trị"},
+    {word:"ほうりつ",kanji:"法律",meaning:"Pháp luật"},
+    {word:"せんそう",kanji:"戦争",meaning:"Chiến tranh"},
+    {word:"へいわ",kanji:"平和",meaning:"Hòa bình"},
+    {word:"もくてき",kanji:"目的",meaning:"Mục đích"},
+    {word:"ろんぶん",kanji:"論文",meaning:"Luận văn"},
+    {word:"たのしみ",kanji:"楽しみ",meaning:"Niềm vui / Kỳ vọng"},
+    {word:"ミキサー",kanji:"",meaning:"Máy xay sinh tố"},
+    {word:"やかん",kanji:"",meaning:"Ấm đun nước"},
+    {word:"せんぬき",kanji:"栓抜き",meaning:"Cái mở nắp chai"},
+    {word:"かんきり",kanji:"缶切り",meaning:"Cái mở đồ hộp"},
+    {word:"ふろしき",kanji:"風呂敷",meaning:"Khăn vuông bọc đồ kiểu Nhật"},
+    {word:"そろばん",kanji:"",meaning:"Bàn tính gẩy"},
+    {word:"たいおんけい",kanji:"体温計",meaning:"Nhiệt kế đo thân nhiệt"}
+  ]},
+  { lesson:43, topic:"Có vẻ sắp, nhìn trông có vẻ (~そうです)", vocabulary:[
+    {word:"ふえます",kanji:"増えます",meaning:"Tăng lên (xuất khẩu)"},
+    {word:"へります",kanji:"減ります",meaning:"Giảm xuống"},
+    {word:"あがります",kanji:"上がります",meaning:"Tăng giá / Đi lên"},
+    {word:"さがります",kanji:"下がります",meaning:"Giảm giá / Đi xuống"},
+    {word:"きれます",kanji:"切れます",meaning:"Đứt (sợi dây)"},
+    {word:"とれます",kanji:"",meaning:"Tuột / Rơi (cúc áo)"},
+    {word:"おちます",kanji:"落ちます",meaning:"Rơi xuống / Rớt"},
+    {word:"なくなります",kanji:"",meaning:"Hết / Cạn kiệt (xăng, tiền)"},
+    {word:"へんな",kanji:"変な",meaning:"Kỳ lạ / Bất thường"},
+    {word:"しあわせな",kanji:"幸せな",meaning:"Hạnh phúc"},
+    {word:"うまい",kanji:"",meaning:"Ngon / Giỏi"},
+    {word:"まずい",kanji:"",meaning:"Dở / Vị tệ"},
+    {word:"つまらない",kanji:"",meaning:"Nhàm chán / Buồn tẻ"},
+    {word:"ガソリン",kanji:"",meaning:"Xăng xe"},
+    {word:"ひ",kanji:"火",meaning:"Lửa / Ngọn lửa"},
+    {word:"パンフレット",kanji:"",meaning:"Tờ rơi giới thiệu"},
+    {word:"いまにも",kanji:"今にも",meaning:"Bất kỳ lúc nào / Sắp sửa"},
+    {word:"わあ",kanji:"",meaning:"Ồ / Oa (thốt lên)"}
+  ]},
+  { lesson:44, topic:"Quá mức, dễ làm, khó làm (~すぎます, ~やすい, ~にくい)", vocabulary:[
+    {word:"なきます",kanji:"泣きます",meaning:"Khóc"},
+    {word:"わらいます",kanji:"笑います",meaning:"Cười"},
+    {word:"かわきます",kanji:"乾きます",meaning:"Khô ráo"},
+    {word:"ぬれます",kanji:"",meaning:"Bị ướt"},
+    {word:"すべります",kanji:"滑ります",meaning:"Trơn trượt"},
+    {word:"おきます",kanji:"起きます",meaning:"Xảy ra (tai nạn)"},
+    {word:"ちょうせつします",kanji:"調節します",meaning:"Điều chỉnh"},
+    {word:"あんぜんな",kanji:"安全な",meaning:"An toàn"},
+    {word:"ていねいな",kanji:"丁寧な",meaning:"Lịch sự / Cẩn thận"},
+    {word:"こまかい",kanji:"細かい",meaning:"Nhỏ / Chi tiết"},
+    {word:"こい",kanji:"濃い",meaning:"Đậm đặc (màu, vị)"},
+    {word:"うすい",kanji:"薄い",meaning:"Nhạt (màu, vị) / Mỏng"},
+    {word:"くうき",kanji:"空気",meaning:"Không khí"},
+    {word:"なみだ",kanji:"涙",meaning:"Nước mắt"},
+    {word:"わしょく",kanji:"和食",meaning:"Món ăn phong cách Nhật"},
+    {word:"ようしょく",kanji:"洋食",meaning:"Món ăn phong cách Tây"},
+    {word:"おかず",kanji:"",meaning:"Thức ăn kèm cơm"},
+    {word:"りょう",kanji:"量",meaning:"Khối lượng / Dung lượng"},
+    {word:"～ばい",kanji:"～倍",meaning:"Gấp ~ lần"},
+    {word:"はんぶん",kanji:"半分",meaning:"Một nửa"},
+    {word:"シングル",kanji:"",meaning:"Phòng đơn"},
+    {word:"ツイン",kanji:"",meaning:"Phòng đôi hai giường"},
+    {word:"たんす",kanji:"",meaning:"Tủ quần áo"},
+    {word:"せんたくもの",kanji:"洗濯物",meaning:"Quần áo giặt giũ"},
+    {word:"どうなさいますか",kanji:"",meaning:"Quý khách muốn làm thế nào?"}
+  ]},
+  { lesson:45, topic:"Trường hợp giả định, dù thế nào (~ばあいは, ~のに)", vocabulary:[
+    {word:"しんじます",kanji:"信じます",meaning:"Tin tưởng"},
+    {word:"キャンセルします",kanji:"",meaning:"Hủy bỏ đặt chỗ"},
+    {word:"しらせます",kanji:"知らせます",meaning:"Báo tin / Thông báo"},
+    {word:"ほしょうしょ",kanji:"保証書",meaning:"Phiếu bảo hành"},
+    {word:"りょうしゅうしょ",kanji:"領収書",meaning:"Hóa đơn thanh toán"},
+    {word:"キャンプ",kanji:"",meaning:"Cắm trại"},
+    {word:"ちゅうし",kanji:"中止",meaning:"Dừng / Hủy bỏ giữa chừng"},
+    {word:"てん",kanji:"点",meaning:"Điểm số"},
+    {word:"レバー",kanji:"",meaning:"Cần gạt điều khiển"},
+    {word:"きゅうに",kanji:"急に",meaning:"Đột ngột"},
+    {word:"むりに",kanji:"無理に",meaning:"Cố quá sức / Gượng ép"},
+    {word:"たのしみにしています",kanji:"楽しみにしています",meaning:"Rất mong đợi / Háo hức"},
+    {word:"いじょうです",kanji:"以上です",meaning:"Xin hết / Toàn bộ là như vậy"},
+    {word:"かかりいん",kanji:"係員",meaning:"Nhân viên phụ trách"},
+    {word:"コース",kanji:"",meaning:"Lộ trình / Khóa học"},
+    {word:"スタート",kanji:"",meaning:"Bắt đầu / Xuất phát"},
+    {word:"ゆうしょうします",kanji:"優勝します",meaning:"Vô địch / Đoạt giải nhất"}
+  ]},
+  { lesson:46, topic:"Thời điểm hành động (~ところ, ~ばかり)", vocabulary:[
+    {word:"わたします",kanji:"渡します",meaning:"Trao cho / Giao tận tay"},
+    {word:"かえってきます",kanji:"帰って来ます",meaning:"Về tới nơi / Trở về"},
+    {word:"でます",kanji:"出ます",meaning:"Xuất phát (xe buýt rời bến)"},
+    {word:"とどきます",kanji:"届きます",meaning:"Được chuyển tới tận nơi"},
+    {word:"にゅうがくします",kanji:"入学します",meaning:"Nhập học"},
+    {word:"そつぎょうします",kanji:"卒業します",meaning:"Tốt nghiệp"},
+    {word:"やきます",kanji:"焼きます",meaning:"Nướng / Rán"},
+    {word:"やけます",kanji:"焼けます",meaning:"Được nướng chín / Cháy rụi"},
+    {word:"るす",kanji:"留守",meaning:"Vắng nhà"},
+    {word:"たくはいびん",kanji:"宅配便",meaning:"Dịch vụ chuyển phát nhanh tận nhà"},
+    {word:"げんいん",kanji:"原因",meaning:"Nguyên nhân"},
+    {word:"ちゅうしゃ",kanji:"注射",meaning:"Tiêm chủng / Mũi tiêm"},
+    {word:"しょくよく",kanji:"食欲",meaning:"Cảm giác thèm ăn"},
+    {word:"パンフレット",kanji:"",meaning:"Tờ gấp quảng cáo"},
+    {word:"ステレオ",kanji:"",meaning:"Dàn âm thanh nổi"},
+    {word:"こちら",kanji:"",meaning:"Phía bên chúng tôi"},
+    {word:"ちょうどいま",kanji:"ちょうど今",meaning:"Vừa đúng lúc này"},
+    {word:"たったいま",kanji:"たった今",meaning:"Mới vừa tức thì"}
+  ]},
+  { lesson:47, topic:"Nghe nói lại, có vẻ theo dấu hiệu (~そうです, ~ようです)", vocabulary:[
+    {word:"あつまります",kanji:"集まります",meaning:"Tập trung lại (người)"},
+    {word:"わかれます",kanji:"別れます",meaning:"Chia tay / Ly tán"},
+    {word:"ながいきします",kanji:"長生きします",meaning:"Sống lâu / Thọ"},
+    {word:"おとがします",kanji:"音がします",meaning:"Phát ra âm thanh"},
+    {word:"こえがします",kanji:"声がします",meaning:"Có tiếng người nói"},
+    {word:"あじがします",kanji:"味がします",meaning:"Có vị"},
+    {word:"においがします",kanji:"",meaning:"Có mùi hương/mùi"},
+    {word:"さします",kanji:"差します",meaning:"Mở (ô)"},
+    {word:"ひどい",kanji:"",meaning:"Tồi tệ / Khủng khiếp"},
+    {word:"こわい",kanji:"怖い",meaning:"Sợ hãi / Đáng sợ"},
+    {word:"てんきよほう",kanji:"天気予報",meaning:"Dự báo thời tiết"},
+    {word:"じっけん",kanji:"実験",meaning:"Thí nghiệm"},
+    {word:"データ",kanji:"",meaning:"Dữ liệu / Số liệu"},
+    {word:"じんこう",kanji:"人口",meaning:"Dân số"},
+    {word:"におい",kanji:"",meaning:"Mùi vị / Mùi hương"},
+    {word:"かがく",kanji:"科学",meaning:"Khoa học"},
+    {word:"いがく",kanji:"医学",meaning:"Y học"},
+    {word:"ぶんがく",kanji:"文学",meaning:"Văn học"},
+    {word:"パトカー",kanji:"",meaning:"Xe cảnh sát tuần tra"},
+    {word:"きゅうきゅうしゃ",kanji:"救急車",meaning:"Xe cấp cứu"},
+    {word:"さんせい",kanji:"賛成",meaning:"Tán thành / Đồng ý"},
+    {word:"はんたい",kanji:"反対",meaning:"Phản đối"}
+  ]},
+  { lesson:48, topic:"Thể sai khiến (使役形)", vocabulary:[
+    {word:"おろします",kanji:"降ろします／下ろします",meaning:"Cho xuống (xe) / Hạ xuống"},
+    {word:"とどけます",kanji:"届けます",meaning:"Chuyển đến / Giao hàng"},
+    {word:"せわをします",kanji:"世話をします",meaning:"Chăm sóc / Giúp đỡ"},
+    {word:"ろくおんします",kanji:"録音します",meaning:"Ghi âm"},
+    {word:"いやな",kanji:"嫌な",meaning:"Khó chịu / Không thích"},
+    {word:"じゅく",kanji:"塾",meaning:"Lớp học thêm tư nhân"},
+    {word:"スケジュール",kanji:"",meaning:"Lịch trình làm việc"},
+    {word:"せいと",kanji:"生徒",meaning:"Học sinh (cấp 2, cấp 3)"},
+    {word:"もの",kanji:"者",meaning:"Người (khiêm nhường chỉ người phe mình)"},
+    {word:"にゅうかん",kanji:"入管",meaning:"Cục quản lý xuất nhập cảnh"},
+    {word:"さいにゅうこくビザ",kanji:"再入国ビザ",meaning:"Visa tái nhập quốc"},
+    {word:"じゆうに",kanji:"自由に",meaning:"Tự do / Thoải mái"},
+    {word:"～かん",kanji:"～間",meaning:"Trong khoảng thời gian ~"},
+    {word:"いいことですね",kanji:"",meaning:"Điều đó hay quá nhỉ"}
+  ]},
+  { lesson:49, topic:"Tôn kính ngữ (尊敬語: お～になります, động từ đặc biệt)", vocabulary:[
+    {word:"つとめます",kanji:"勤めます",meaning:"Làm việc tại (công ty)"},
+    {word:"やすみます",kanji:"休みます",meaning:"Nghỉ ngơi / Đi ngủ"},
+    {word:"かけます",kanji:"掛けます",meaning:"Ngồi xuống (ghế)"},
+    {word:"すごします",kanji:"過ごします",meaning:"Trải qua / Dành thời gian"},
+    {word:"よります",kanji:"寄ります",meaning:"Ghé tạt qua"},
+    {word:"いらっしゃいます",kanji:"",meaning:"Ở / Đi / Đến (tôn kính của います, いきます, きます)"},
+    {word:"めしあがります",kanji:"召し上がります",meaning:"Ăn / Uống (tôn kính của たべます, のみます)"},
+    {word:"おっしゃいます",kanji:"",meaning:"Nói (tôn kính của いいます)"},
+    {word:"なさいます",kanji:"",meaning:"Làm (tôn kính của します)"},
+    {word:"ごらんになります",kanji:"ご覧になります",meaning:"Xem / Nhìn (tôn kính của みます)"},
+    {word:"ごぞんじです",kanji:"ご存じです",meaning:"Biết (tôn kính của しっています)"},
+    {word:"あいさつ",kanji:"",meaning:"Chào hỏi / Lời chào"},
+    {word:"はいざら",kanji:"灰皿",meaning:"Gạt tàn thuốc"},
+    {word:"りょかん",kanji:"旅館",meaning:"Nhà nghỉ truyền thống Nhật"},
+    {word:"かいじょう",kanji:"会場",meaning:"Hội trường / Địa điểm tổ chức"},
+    {word:"バスてい",kanji:"バス停",meaning:"Trạm dừng xe buýt"},
+    {word:"ぼうえき",kanji:"貿易",meaning:"Thương mại quốc tế / Mậu dịch"},
+    {word:"～さま",kanji:"～様",meaning:"Ngài / Quý khách ~"},
+    {word:"かえりに",kanji:"帰りに",meaning:"Trên đường về"},
+    {word:"たまに",kanji:"",meaning:"Thỉnh thoảng / Đôi khi"},
+    {word:"ちっとも",kanji:"",meaning:"Chẳng chút nào (đi với phủ định)"},
+    {word:"えんりょなく",kanji:"遠慮なく",meaning:"Không cần ngại ngần / Tự nhiên"}
+  ]},
+  { lesson:50, topic:"Khiêm nhường ngữ (謙譲語: お～します, động từ đặc biệt)", vocabulary:[
+    {word:"まいります",kanji:"参ります",meaning:"Đi / Đến (khiêm nhường của いきます, きます)"},
+    {word:"おります",kanji:"",meaning:"Ở / Có mặt (khiêm nhường của います)"},
+    {word:"いただきます",kanji:"",meaning:"Ăn / Uống / Nhận (khiêm nhường của たべます, のみます, もらいます)"},
+    {word:"もうします",kanji:"申します",meaning:"Tên là / Nói (khiêm nhường của いいます)"},
+    {word:"いたします",kanji:"",meaning:"Làm (khiêm nhường của します)"},
+    {word:"はいけんします",kanji:"拝見します",meaning:"Xem / Đọc qua (khiêm nhường của みます)"},
+    {word:"ぞんじます",kanji:"存じます",meaning:"Biết / Nghĩ (khiêm nhường của しっています, おもいます)"},
+    {word:"うかがいます",kanji:"伺います",meaning:"Hỏi / Nghe / Ghé thăm (khiêm nhường)"},
+    {word:"おめにかかります",kanji:"お目にかかります",meaning:"Gặp gỡ (khiêm nhường của あいます)"},
+    {word:"いれます",kanji:"いれます",meaning:"Pha (cà phê, trà)"},
+    {word:"よういします",kanji:"用意します",meaning:"Chuẩn bị sẵn sàng"},
+    {word:"わたくし",kanji:"私",meaning:"Tôi (khiêm tốn, lịch sự cao)"},
+    {word:"ガイド",kanji:"",meaning:"Hướng dẫn viên du lịch"},
+    {word:"メールアドレス",kanji:"",meaning:"Địa chỉ email"},
+    {word:"スケジュール",kanji:"",meaning:"Lịch trình"},
+    {word:"さらいしゅう",kanji:"再来週",meaning:"Tuần sau nữa"},
+    {word:"さらいげつ",kanji:"再来月",meaning:"Tháng sau nữa"},
+    {word:"さらいねん",kanji:"再来年",meaning:"Năm sau nữa"},
+    {word:"はじめに",kanji:"初めに",meaning:"Trước tiên / Đầu tiên"},
+    {word:"きんちょうします",kanji:"緊張します",meaning:"Căng thẳng / Hồi hộp"},
+    {word:"しょうきん",kanji:"賞金",meaning:"Tiền thưởng"},
+    {word:"きりん",kanji:"",meaning:"Hươu cao cổ"},
+    {word:"ころ",kanji:"",meaning:"Thời gian / Hồi đó"},
+    {word:"かないます",kanji:"かないます",meaning:"Trở thành hiện thực (ước mơ)"},
+    {word:"おうえんします",kanji:"応援します",meaning:"Cổ vũ / Ủng hộ"},
+    {word:"かんしゃします",kanji:"感謝します",meaning:"Cảm ơn / Tri ân"}
+  ]}
+];
+
+// ═══════════════════════════════════════════════
+//  GROUPS CONFIG
+// ═══════════════════════════════════════════════
+const GROUPS = [
+  { label:"BÀI 26–30", min:26, max:30, sub:"Giải thích · Khả năng · Hành động song song · Tự/Tha ĐT" },
+  { label:"BÀI 31–35", min:31, max:35, sub:"Ý chí · Khuyên bảo · Mệnh lệnh · Trình tự · Điều kiện" },
+  { label:"BÀI 36–40", min:36, max:40, sub:"Mục đích · Bị động · Danh từ hóa · Lý do · Câu hỏi lồng" },
+  { label:"BÀI 41–45", min:41, max:45, sub:"Cho nhận · Mục đích · Phỏng đoán · Quá mức · Giả định" },
+  { label:"BÀI 46–50", min:46, max:50, sub:"Thời điểm · Truyền đạt · Sai khiến · Tôn kính · Khiêm nhường" },
+  { label:"TẤT CẢ 25 BÀI N4", min:26, max:50, sub:"Tổng hợp toàn bộ từ vựng Minna N4 (26–50)" }
+];
+
+// ═══════════════════════════════════════════════
+//  STATE & CORE LOGIC
+// ═══════════════════════════════════════════════
+let selectedGroup = null;
+let quizPool = [];
+let currentMode = '';
+let currentIdx = 0;
+let score = 0;
+
+function totalWords() {
+  return DB.reduce((s, l) => s + l.vocabulary.length, 0);
+}
+
+function wordsInGroup(min, max) {
+  return DB.filter(l => l.lesson >= min && l.lesson <= max)
+           .reduce((s, l) => s + l.vocabulary.length, 0);
+}
+
+function buildMenu() {
+  document.getElementById('total-badge').textContent = `${totalWords()} từ vựng · 25 bài học N4`;
+  const grid = document.getElementById('group-grid');
+  grid.innerHTML = '';
+  GROUPS.forEach((g, i) => {
+    const count = wordsInGroup(g.min, g.max);
+    const card = document.createElement('div');
+    card.className = 'group-card';
+    card.innerHTML = `
+      <div class="group-num">${i < 5 ? (i+1) : '★'}</div>
+      <div class="group-info">
+        <b>${g.label}</b>
+        <span>${g.sub}</span>
+      </div>
+      <div class="group-count">${count} từ</div>
+    `;
+    card.onclick = () => selectGroup(i);
+    grid.appendChild(card);
+  });
+}
+
+function selectGroup(idx) {
+  selectedGroup = GROUPS[idx];
+  document.getElementById('mode-title').textContent = selectedGroup.label;
+  document.getElementById('mode-sub').textContent = `${wordsInGroup(selectedGroup.min, selectedGroup.max)} từ vựng`;
+  goTo('s-mode');
+}
+
+function getAllWords() {
+  const lessons = DB.filter(l => l.lesson >= selectedGroup.min && l.lesson <= selectedGroup.max);
+  return lessons.flatMap(l => l.vocabulary);
+}
+
+function startQuiz(mode) {
+  currentMode = mode;
+  const all = getAllWords();
+  if (mode === 'kanji') {
+    quizPool = all.filter(v => v.kanji && v.kanji.trim() !== '');
+    if (quizPool.length === 0) { alert('Nhóm này không có từ có Kanji!'); return; }
+  } else {
+    quizPool = [...all];
+  }
+  quizPool.sort(() => Math.random() - 0.5);
+  currentIdx = 0;
+  score = 0;
+  goTo('s-quiz');
+  renderQuestion();
+}
+
+function restartQuiz() {
+  startQuiz(currentMode);
+  goTo('s-quiz');
+}
+
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+}
+
+function getAllWordsForDistractors() {
+  return DB.flatMap(l => l.vocabulary);
+}
+
+function renderQuestion() {
+  if (currentIdx >= quizPool.length) { showResult(); return; }
+
+  const item = quizPool[currentIdx];
+  const pct = (currentIdx / quizPool.length) * 100;
+  document.getElementById('q-fill').style.width = pct + '%';
+  document.getElementById('q-count').textContent = `${currentIdx + 1} / ${quizPool.length}`;
+  document.getElementById('q-score').textContent = `✓ ${score}`;
+
+  let displayText, correctAnswer, hint;
+  if (currentMode === 'kanji') {
+    displayText = item.kanji;
+    correctAnswer = `${item.word}（${item.meaning}）`;
+    hint = 'Chọn cách đọc + nghĩa';
+  } else if (currentMode === 'kana') {
+    displayText = item.word;
+    correctAnswer = item.meaning;
+    hint = 'Chọn nghĩa tiếng Việt';
+  } else {
+    displayText = item.meaning;
+    correctAnswer = item.word;
+    hint = 'Chọn chữ Nhật đúng';
+  }
+
+  document.getElementById('q-main').textContent = displayText;
+  document.getElementById('q-hint').textContent = hint;
+
+  const allWords = getAllWordsForDistractors();
+  const options = new Set([correctAnswer]);
+  let attempts = 0;
+  while (options.size < 4 && attempts < 200) {
+    attempts++;
+    const r = allWords[Math.floor(Math.random() * allWords.length)];
+    let opt;
+    if (currentMode === 'kanji') {
+      if (!r.kanji || r.kanji.trim() === '') continue;
+      opt = `${r.word}（${r.meaning}）`;
+    } else if (currentMode === 'kana') {
+      opt = r.meaning;
+    } else {
+      opt = r.word;
+    }
+    if (opt !== correctAnswer) options.add(opt);
+  }
+  const shuffled = [...options].sort(() => Math.random() - 0.5);
+
+  const box = document.getElementById('q-opts');
+  box.innerHTML = '';
+  shuffled.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt;
+    btn.onclick = () => handleAnswer(btn, opt, correctAnswer);
+    box.appendChild(btn);
+  });
+}
+
+function handleAnswer(btn, selected, correct) {
+  document.querySelectorAll('.opt').forEach(b => {
+    b.disabled = true;
+    b.onclick = null;
+  });
+  if (selected === correct) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.opt').forEach(b => {
+      if (b.textContent === correct) b.classList.add('correct');
+    });
+  }
+  setTimeout(() => { currentIdx++; renderQuestion(); }, 750);
+}
+
+function showResult() {
+  goTo('s-result');
+  const pct = Math.round((score / quizPool.length) * 100);
+  document.getElementById('r-score').textContent = `${score} / ${quizPool.length}`;
+  document.getElementById('r-pct').textContent = `${pct}% chính xác`;
+  document.getElementById('r-label').textContent = `Chế độ: ${currentMode === 'kanji' ? 'KANJI' : currentMode === 'kana' ? 'KANA' : 'NGHĨA → KANA'} · ${selectedGroup.label}`;
+  let emoji = '😅';
+  if (pct >= 90) emoji = '🏆';
+  else if (pct >= 70) emoji = '🎯';
+  else if (pct >= 50) emoji = '📚';
+  document.getElementById('r-emoji').textContent = emoji;
+}
+
+buildMenu();
+</script>
+</body>
+</html>
